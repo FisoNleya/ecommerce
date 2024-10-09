@@ -1,0 +1,58 @@
+spring:
+  datasource:
+#    url: jdbc:postgresql://localhost:5432/product_catalogue
+#    username: postgres
+#    password: postgres
+    url: jdbc:postgresql://184.174.38.62:5432/product_catalogue?createDatabaseIfNotExist=true
+    username: manica_engines
+    password: jraiyeAC9Ar8mAs
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+
+  kafka:
+    consumer:
+      bootstrap-servers: dura.manicasolutions.dev:9092
+      group-id: products
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      # value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: '*'
+    producer:
+      bootstrap-servers: dura.manicasolutions.dev:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      # value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+
+user:
+  service:
+    url: https://api.manicasolutions.dev/permissions
+    auto-bid-increment: 5
+
+
+topic:
+  user:
+    registration: user_registration
+    update: user_updates
+  vendor:
+    vendor_updates: vendor_updates
+  comms:
+    order_confirmation: order_confirmation
+
+delivery:
+  option:
+    courier:
+      url: https://api.shiplogic.com/v2
+      api_key: c0f09afe6c404899925c0b6d126a9b47
+#      api_key: a601d99c75fc4c64b5a64288f97d52b4
